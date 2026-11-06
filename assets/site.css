@@ -64,10 +64,10 @@ nav { display: flex; align-items: center; gap: clamp(12px, 3vw, 34px); }
 .button-bright { background: #fff; color: #090909; box-shadow: 0 6px 24px #ffffff1f; }
 .button-bright:hover { background: #e4e4e4; }
 
-.hero { display: flex; justify-content: space-between; align-items: end; gap: 32px; padding-block: clamp(60px, 9vw, 118px) 48px; }
+.hero { display: flex; justify-content: space-between; align-items: end; gap: 32px; padding-block: clamp(60px, 8vw, 100px) 48px; }
 .eyebrow { color: var(--muted); font-size: 11px; font-weight: 690; letter-spacing: .18em; text-transform: uppercase; }
 .status-dot { display: inline-block; width: 6px; height: 6px; margin-inline-end: 6px; border-radius: 50%; background: #f1f1f1; box-shadow: 0 0 12px #fff5; vertical-align: .13em; }
-h1 { margin-block: 17px 21px; font-size: clamp(48px, 8.2vw, 106px); font-weight: 710; letter-spacing: -.085em; line-height: .98; }
+h1 { margin-block: 17px 21px; font-size: clamp(48px, 8.2vw, 96px); font-weight: 710; letter-spacing: -.06em; word-spacing: .025em; line-height: .99; }
 .lead { max-width: 530px; color: var(--secondary); font-size: clamp(16px, 2vw, 19px); }
 .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 29px; }
 .compatibility { color: var(--muted); font-size: 12px; }
@@ -105,7 +105,7 @@ h1 { margin-block: 17px 21px; font-size: clamp(48px, 8.2vw, 106px); font-weight:
 .preview-controls a svg { width: 13px; height: 13px; }
 
 .rhythm { padding-block: clamp(62px, 9vw, 112px) 26px; }
-h2 { margin-top: 10px; font-size: clamp(32px, 4.8vw, 57px); font-weight: 670; line-height: 1.03; letter-spacing: -.065em; }
+h2 { margin-top: 10px; font-size: clamp(32px, 4.8vw, 57px); font-weight: 670; line-height: 1.03; letter-spacing: -.05em; }
 .rhythm h2 { max-width: 690px; }
 .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px; margin-top: 30px; }
 .card, .privacy, .install { padding: clamp(20px, 3.1vw, 37px); border: 1px solid var(--border); border-radius: 22px; background: var(--card); }
