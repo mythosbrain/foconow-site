@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="FocoNow is a local-first Mac workspace for planning your day, focusing on one task, and reflecting on your progress.">
+  <title>FocoNow for Mac</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/preview.js" defer></script>
+</head>
+<body>
+  <svg aria-hidden="true" class="symbols" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></symbol>
+    <symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19m0-14-1.5 1.5m-11 11L5 19"/></symbol>
+    <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="book" viewBox="0 0 24 24"><path d="M12 6v14m0-14c-2.5-2-6-2.7-9-1.5v14c3-1.2 6.5-.5 9 1.5 2.5-2 6-2.7 9-1.5v-14C18 3.3 14.5 4 12 6Z"/></symbol>
+    <symbol id="lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4m-4 4v2"/></symbol>
+  </svg>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#" aria-label="FocoNow home">
+        <img src="assets/mark.svg" width="34" height="34" alt=""> FocoNow
+      </a>
+      <nav aria-label="Main navigation">
+        <a class="nav-text" href="#workspace">Workspace</a>
+        <a class="nav-text" href="#privacy">Privacy</a>
+        <a class="button button-small button-quiet" href="#install">Get the app <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> A daily workspace for Mac</p>
+        <h1 id="hero-title">Make time for<br>what matters.</h1>
+        <p class="lead">Plan your day, settle into a focus session, and write a few lines before you close the lid. All in one place on your Mac.</p>
+        <div class="hero-actions">
+          <a class="button button-bright" href="downloads/FocoNow-Mac-v1.15.2.dmg" download><svg aria-hidden="true"><use href="#download"/></svg> Download for Mac</a>
+          <span class="compatibility">Free preview · Apple silicon · macOS 13+</span>
+        </div>
+      </div>
+      <aside class="hero-note" aria-label="FocoNow preview details">
+        <img src="assets/mark.svg" width="52" height="52" alt="">
+        <div><strong>FocoNow for Mac</strong><span>Preview 1.15.2 · 949 KB</span></div>
+        <svg aria-hidden="true"><use href="#lock"/></svg>
+      </aside>
+    </section>
+
+    <section class="workspace" id="workspace" aria-label="Explore the FocoNow workspace">
+      <div class="app-window">
+        <div class="app-bar">
+          <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <span id="preview-label">My Day</span>
+          <span class="preview-note"><span class="status-dot"></span> Sample workspace</span>
+        </div>
+        <div id="preview-content">
+          <img id="preview-image" src="assets/my-day.jpg" width="1600" height="1062" alt="The My Day screen with a focus timer, daily priorities, and a short review.">
+        </div>
+      </div>
+      <div class="preview-controls" hidden>
+        <div role="tablist" aria-label="App screenshots">
+          <button type="button" id="tab-day" role="tab" aria-selected="true" aria-controls="preview-content" data-view="day">My Day</button>
+          <button type="button" id="tab-focus" role="tab" aria-selected="false" aria-controls="preview-content" tabindex="-1" data-view="focus">Tasks &amp; Focus</button>
+          <button type="button" id="tab-insights" role="tab" aria-selected="false" aria-controls="preview-content" tabindex="-1" data-view="insights">Insights</button>
+        </div>
+        <a id="preview-full" href="assets/my-day.jpg">View full screenshot <svg aria-hidden="true"><use href="#arrow"/></svg></a>
+      </div>
+    </section>
+
+    <section class="rhythm" aria-labelledby="rhythm-title">
+      <p class="eyebrow">The daily workflow</p>
+      <h2 id="rhythm-title">From the first task to the last thought.</h2>
+      <div class="card-grid">
+        <article class="card"><div class="card-top"><span class="eyebrow">01 / Plan</span><span class="icon"><svg aria-hidden="true"><use href="#sun"/></svg></span></div>
+          <h3>Start with a target</h3><p>Pick the outcome you want from today and put the tasks that support it in one list.</p>
+        </article>
+        <article class="card"><div class="card-top"><span class="eyebrow">02 / Focus</span><span class="icon"><svg aria-hidden="true"><use href="#clock"/></svg></span></div>
+          <h3>Work in focused blocks</h3><p>Run a Pomodoro from the task list or menu bar. Hear an alert when a session or break ends and see your focus time in Insights.</p>
+        </article>
+        <article class="card"><div class="card-top"><span class="eyebrow">03 / Reflect</span><span class="icon"><svg aria-hidden="true"><use href="#book"/></svg></span></div>
+          <h3>Write down what you learned</h3><p>End with a short daily review. Keep a journal of small wins, lessons, and what you want to do tomorrow.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="privacy" id="privacy" aria-labelledby="privacy-title">
+      <span class="icon"><svg aria-hidden="true"><use href="#lock"/></svg></span>
+      <div><p class="eyebrow">Local by design</p><h2 id="privacy-title">Your day stays on your Mac.</h2>
+        <p>FocoNow works offline and saves your tasks, focus history, and journal on this Mac. You can export a backup to a location you choose. The welcome walkthrough explains optional access for alerts and iPhone Screen Time.</p>
+      </div>
+    </section>
+
+    <section class="install" id="install" aria-labelledby="install-title">
+      <div class="install-intro">
+        <p class="eyebrow">FocoNow · Mac preview</p>
+        <h2 id="install-title">Ready to plan your day?</h2>
+        <a class="button button-bright" href="downloads/FocoNow-Mac-v1.15.2.dmg" download><svg aria-hidden="true"><use href="#download"/></svg> Download FocoNow</a>
+        <p class="compatibility">Version 1.15.2 · Apple silicon · macOS 13+</p>
+      </div>
+      <div class="install-steps">
+        <h3>Install on Mac</h3>
+        <ol>
+          <li>Open the downloaded disk image.</li>
+          <li>Drag <strong>FocoNow.app</strong> onto the <strong>Applications</strong> shortcut.</li>
+          <li>Open FocoNow from Applications and follow the welcome walkthrough.</li>
+        </ol>
+        <details><summary>If macOS asks for approval</summary>
+          <p>This preview is locally signed and has yet to be notarized by Apple. Follow <a href="https://support.apple.com/102445">Apple’s instructions for opening apps</a>. Desktop widgets require macOS 14 or later.</p>
+        </details>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap site-footer">
+    <a class="brand" href="#" aria-label="FocoNow, back to top"><img src="assets/mark.svg" width="28" height="28" alt=""> FocoNow</a>
+    <span>A daily workspace for macOS.</span>
+  </footer>
+</body>
+</html>
