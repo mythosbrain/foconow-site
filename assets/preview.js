@@ -6,9 +6,9 @@ const fullImage = document.querySelector('#preview-full');
 const label = document.querySelector('#preview-label');
 
 const views = {
-  day: ['assets/my-day.jpg', 1600, 1062, image.alt],
-  focus: ['assets/tasks-focus.jpg', 1440, 956, 'The Tasks and Focus screen with a prioritized task list next to the Pomodoro timer.'],
-  insights: ['assets/insights.jpg', 1440, 1104, 'Focus Insights with daily focus time, totals, and completed sessions.'],
+  day: ['assets/my-day.png', 1600, 1062, image.alt],
+  focus: ['assets/tasks-focus.png', 1440, 956, 'The Tasks and Focus screen with a prioritized task list next to the Pomodoro timer.'],
+  insights: ['assets/insights.png', 1440, 1104, 'Focus Insights with daily focus time, totals, and completed sessions.'],
 };
 
 function showView(tab) {
