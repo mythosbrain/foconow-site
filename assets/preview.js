@@ -158,3 +158,24 @@ if ('IntersectionObserver' in window) {
   surfaces.forEach(surface => observer.observe(surface));
 }
 updateMotion();
+
+// Copy visible text only; opening Terminal and running it are the user's actions.
+const commandField = document.querySelector('#launch-command');
+const copyButton = document.querySelector('.copy-command');
+const copyStatus = document.querySelector('#copy-status');
+if (commandField && copyButton && copyStatus) {
+  copyButton.hidden = false;
+  copyButton.addEventListener('click', async () => {
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(commandField.value);
+      copyButton.textContent = 'Copied ✓';
+      copyStatus.textContent = 'Copied. Open Terminal, paste with ⌘ V, then press Return.';
+    } catch {
+      commandField.focus({ preventScroll: true });
+      commandField.select();
+      copyButton.textContent = 'Copy command';
+      copyStatus.textContent = 'Command selected. Press ⌘ C to copy, then paste it in Terminal.';
+    }
+  });
+}

@@ -2017,3 +2017,15 @@ body { isolation: isolate; }
 .helper-guide { margin: 22px 0; padding: 20px; border: 1px solid #ffffff20; border-radius: 14px; background: #ffffff05; }
 .helper-guide h3 { font-size: 19px; margin: 0 0 12px; }
 .helper-guide p { font-size: 13px; color: #b9bfcd; line-height: 1.75; margin-top: 12px; }
+
+.terminal-guide { margin: 24px 0; padding: 22px; border: 1px solid #ffffff2a; border-radius: 18px; background: linear-gradient(140deg,#ffffff08,#ffffff02); }
+.terminal-guide h3 { font-size: 22px; margin: 12px 0; }
+.terminal-guide p { color: #b9bfcd; font-size: 13px; line-height: 1.75; margin-top: 12px; }
+.command-box { margin-top: 18px; padding: 16px; background: #07090e; border: 1px solid #ffffff20; border-radius: 13px; }
+.command-box label { display: block; font-size: 10px; color: #aeb7ca; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+.command-box textarea { display: block; width: 100%; resize: vertical; min-height: 95px; padding: 0; border: 0; border-radius: 0; outline-offset: 5px; background: transparent; color: #e1e7f5; font: 12px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; overflow-wrap: anywhere; }
+.command-box .copy-command { margin-top: 12px; min-height: 40px; font-size: 12px; }
+.copy-command[hidden] { display: none; }
+.terminal-guide .copy-status { min-height: 24px; font-size: 12px; color: #e1e7f5; }
+.terminal-guide .command-explanation { font-size: 11px; }
+@media(max-width:480px) { .terminal-guide { padding: 17px; } .command-box { padding: 12px; } .command-box textarea { font-size: 11px; min-height: 120px; } }
