@@ -47,3 +47,68 @@ controls.addEventListener('keydown', event => {
   showView(tabs[next]);
   tabs[next].focus();
 });
+
+// Decorative motion stays optional and never runs against the system preference.
+const root = document.documentElement;
+const motionButton = document.querySelector('.motion-toggle');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+const previewStage = document.querySelector('.preview-stage');
+const appWindow = document.querySelector('.app-window');
+let motionPaused = false;
+try { motionPaused = localStorage.getItem('foconow-site-motion') === 'paused'; } catch {}
+let tiltFrame = 0;
+
+function resetTilt() {
+  cancelAnimationFrame(tiltFrame);
+  tiltFrame = 0;
+  for (const property of ['--tilt-x', '--tilt-y', '--glare-x', '--glare-y', '--glare']) {
+    appWindow.style.removeProperty(property);
+  }
+}
+function updateMotion() {
+  const disabled = motionPaused || reducedMotion.matches;
+  root.dataset.motion = disabled || document.hidden ? 'off' : 'on';
+  motionButton.disabled = reducedMotion.matches;
+  motionButton.setAttribute('aria-pressed', String(disabled));
+  motionButton.querySelector('.motion-label').textContent = reducedMotion.matches
+    ? 'Reduced motion' : motionPaused ? 'Play motion' : 'Pause motion';
+  motionButton.querySelector('.motion-symbol').textContent = disabled ? '▷' : 'Ⅱ';
+  if (root.dataset.motion === 'off') resetTilt();
+}
+motionButton.hidden = false;
+motionButton.addEventListener('click', () => {
+  motionPaused = !motionPaused;
+  try { localStorage.setItem('foconow-site-motion', motionPaused ? 'paused' : 'playing'); } catch {}
+  updateMotion();
+});
+reducedMotion.addEventListener('change', updateMotion);
+finePointer.addEventListener('change', resetTilt);
+document.addEventListener('visibilitychange', updateMotion);
+window.addEventListener('blur', resetTilt);
+window.addEventListener('resize', resetTilt, { passive: true });
+previewStage.addEventListener('pointerleave', resetTilt);
+previewStage.addEventListener('pointercancel', resetTilt);
+previewStage.addEventListener('pointermove', event => {
+  if (root.dataset.motion !== 'on' || !finePointer.matches || event.pointerType === 'touch') return;
+  cancelAnimationFrame(tiltFrame);
+  const { clientX, clientY } = event;
+  tiltFrame = requestAnimationFrame(() => {
+    const bounds = previewStage.getBoundingClientRect();
+    const x = Math.max(0, Math.min(1, (clientX - bounds.left) / bounds.width));
+    const y = Math.max(0, Math.min(1, (clientY - bounds.top) / bounds.height));
+    appWindow.style.setProperty('--tilt-x', `${(0.5 - y) * 4}deg`);
+    appWindow.style.setProperty('--tilt-y', `${(x - 0.5) * 4}deg`);
+    appWindow.style.setProperty('--glare-x', `${x * 100}%`);
+    appWindow.style.setProperty('--glare-y', `${y * 100}%`);
+    appWindow.style.setProperty('--glare', '1');
+    tiltFrame = 0;
+  });
+});
+if ('IntersectionObserver' in window) {
+  const observer = new IntersectionObserver(entries => {
+    root.dataset.heroVisible = String(entries[0].isIntersecting);
+  });
+  observer.observe(document.querySelector('.hero-art'));
+}
+updateMotion();

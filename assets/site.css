@@ -1499,3 +1499,182 @@ details a {
     white-space: nowrap;
   }
 }
+
+/* Lightweight 3D glass: layered surfaces and orbiting highlights. */
+.hero {
+  padding-top: 44px;
+}
+.hero-art {
+  height: 154px;
+  display: grid;
+  place-items: center;
+  margin: 12px 0 -5px;
+  pointer-events: none;
+}
+.glass-scene {
+  position: relative;
+  width: 230px;
+  height: 150px;
+  perspective: 700px;
+  transform-style: preserve-3d;
+}
+.glass-emblem {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  left: 65px;
+  top: 20px;
+  transform-style: preserve-3d;
+  transform: rotateX(16deg) rotateY(-24deg) rotateZ(-7deg);
+  animation: glass-float 9s ease-in-out infinite;
+}
+.glass-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 27px;
+  border: 1px solid #ffffff45;
+  background: linear-gradient(140deg, #777f9640, #16191fdd 65%, #9ca8bd25);
+  box-shadow: inset 0 1px 1px #ffffff50, 0 14px 30px #0005;
+}
+.glass-back {
+  transform: translateZ(-14px);
+  background: #292d38;
+}
+.glass-middle {
+  transform: translateZ(-7px);
+  border-color: #dce3fa65;
+}
+.glass-front {
+  display: grid;
+  place-items: center;
+  transform: translateZ(1px);
+  background: linear-gradient(135deg, #a0a8be35, #21252ed9 55%, #69758b30);
+}
+.glass-front img {
+  border-radius: 18px;
+  box-shadow: 0 0 28px #e6ecff28;
+}
+.orbit {
+  position: absolute;
+  width: 204px;
+  height: 204px;
+  left: 13px;
+  top: -29px;
+  border: 1px solid #dfe5fc35;
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  pointer-events: none;
+}
+.orbit-back {
+  transform: translateZ(-28px) rotateX(67deg) rotateZ(-25deg);
+  animation: orbit-back 18s linear infinite;
+  border-color: #dfe5fc25;
+}
+.orbit-front {
+  transform: translateZ(20px) rotateX(72deg) rotateY(-14deg) rotateZ(35deg);
+  animation: orbit-front 24s linear infinite;
+}
+.orbit span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  left: 50%;
+  top: -3px;
+  border-radius: 50%;
+  background: #e9edff;
+  box-shadow: 0 0 12px #eef2ff80;
+}
+.orbit-back span {
+  width: 4px;
+  height: 4px;
+  top: -2px;
+  background: #969eb3;
+}
+.emblem-shadow {
+  position: absolute;
+  left: 65px;
+  bottom: 4px;
+  width: 100px;
+  height: 12px;
+  background: #b6c9ff14;
+  border-radius: 50%;
+  filter: blur(9px);
+  animation: glass-shadow 9s ease-in-out infinite;
+}
+.motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 32px;
+  margin-top: 13px;
+  padding: 0 11px;
+  border: 1px solid #ffffff17;
+  border-radius: 20px;
+  background: #ffffff03;
+  color: #a6aab7;
+  font: inherit;
+  font-size: 10px;
+  cursor: pointer;
+}
+.motion-toggle[hidden] {
+  display: none;
+}
+.motion-toggle:hover {
+  color: #fff;
+  background: #ffffff0a;
+}
+.motion-toggle:disabled {
+  cursor: default;
+}
+.motion-symbol {
+  width: 10px;
+  font-size: 9px;
+}
+.preview-stage {
+  perspective: 1800px;
+}
+.app-window {
+  position: relative;
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 350ms ease-out;
+}
+.app-window::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at var(--glare-x, 50%) var(--glare-y, 30%), #ecf1ff15, transparent 60%);
+  opacity: var(--glare, 0);
+  transition: opacity 250ms;
+  pointer-events: none;
+}
+[data-motion="off"] .hero-art *,
+[data-hero-visible="false"] .hero-art * {
+  animation-play-state: paused;
+}
+@keyframes glass-float {
+  0%, 100% { transform: translateY(3px) rotateX(16deg) rotateY(-24deg) rotateZ(-7deg); }
+  50% { transform: translateY(-8px) rotateX(7deg) rotateY(24deg) rotateZ(6deg); }
+}
+@keyframes glass-shadow {
+  0%, 100% { transform: scale(1); opacity: .7; }
+  50% { transform: scale(.8); opacity: .35; }
+}
+@keyframes orbit-back {
+  from { transform: translateZ(-28px) rotateX(67deg) rotateZ(-25deg); }
+  to { transform: translateZ(-28px) rotateX(67deg) rotateZ(335deg); }
+}
+@keyframes orbit-front {
+  from { transform: translateZ(20px) rotateX(72deg) rotateY(-14deg) rotateZ(35deg); }
+  to { transform: translateZ(20px) rotateX(72deg) rotateY(-14deg) rotateZ(-325deg); }
+}
+@media (max-width: 480px) {
+  .hero { padding-top: 30px; }
+  .hero-art { height: 125px; margin: 7px 0 -5px; }
+  .glass-scene { transform: scale(.82); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-art * { animation: none !important; }
+  .app-window { transform: none !important; }
+}

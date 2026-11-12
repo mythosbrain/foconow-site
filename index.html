@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-motion="off">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,6 +44,18 @@
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
       <a class="release-pill" href="https://github.com/mythosbrain/foconow/releases/tag/v1.17.0"><span class="status-dot"></span> Meet the new FocoNow <span class="pill-version">1.17</span><span aria-hidden="true">↗</span></a>
+      <div class="hero-art" aria-hidden="true">
+        <div class="glass-scene">
+          <div class="orbit orbit-back"><span></span></div>
+          <div class="glass-emblem">
+            <div class="glass-layer glass-back"></div>
+            <div class="glass-layer glass-middle"></div>
+            <div class="glass-layer glass-front"><img src="assets/mark.svg" width="66" height="66" alt=""></div>
+          </div>
+          <div class="orbit orbit-front"><span></span></div>
+          <div class="emblem-shadow"></div>
+        </div>
+      </div>
       <h1 id="hero-title">Make room for<br><span>what matters.</span></h1>
       <p class="lead">A little less scattered. A lot more focused.<br>Bring your tasks, focus time, and daily reflections<br class="desktop-break"> together in one calm workspace.</p>
       <div class="hero-actions">
@@ -51,6 +63,7 @@
         <a class="button button-ghost" href="#workspace">Take a look <svg aria-hidden="true"><use href="#arrow"/></svg></a>
       </div>
       <p class="compatibility">Free preview <span>·</span> Apple silicon <span>·</span> macOS 13+</p>
+      <button class="motion-toggle" type="button" aria-pressed="false" hidden><span class="motion-symbol" aria-hidden="true">Ⅱ</span><span class="motion-label">Pause motion</span></button>
     </section>
 
     <section class="workspace wrap" id="workspace" aria-label="Explore the FocoNow workspace">
@@ -62,9 +75,10 @@
           <button type="button" id="tab-insights" role="tab" aria-selected="false" aria-controls="preview-content" tabindex="-1" data-view="insights"><svg aria-hidden="true"><use href="#book"/></svg> Insights</button>
         </div>
       </div>
-      <div class="app-window">
+      <div class="preview-stage"><div class="app-window">
         <div class="app-bar"><div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div><span id="preview-label">Tasks &amp; Focus</span><span class="preview-note">FocoNow for Mac</span></div>
         <div id="preview-content" tabindex="0"><img id="preview-image" src="assets/tasks-focus-preview.jpg" width="1600" height="1063" fetchpriority="high" alt="FocoNow Tasks and Focus, with a prioritized task list and a Pomodoro timer in a dark glass interface."></div>
+      </div>
       </div>
       <div class="preview-caption"><p id="preview-description">A clear plan. One next step. Everything you need to get going.</p><a id="preview-full" href="assets/tasks-focus.png" target="_blank" rel="noopener">Full screenshot <span aria-hidden="true">↗</span></a></div>
       <div class="trust-strip"><span><svg aria-hidden="true"><use href="#lock"/></svg> Stored on your Mac</span><span><svg aria-hidden="true"><use href="#check"/></svg> No account needed</span><span><svg aria-hidden="true"><use href="#clock"/></svg> Works offline</span></div>
