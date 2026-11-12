@@ -2013,3 +2013,7 @@ body { isolation: isolate; }
   .first-launch h3 { font-size: 21px; }
   .first-launch ol { font-size: 13px; }
 }
+
+.helper-guide { margin: 22px 0; padding: 20px; border: 1px solid #ffffff20; border-radius: 14px; background: #ffffff05; }
+.helper-guide h3 { font-size: 19px; margin: 0 0 12px; }
+.helper-guide p { font-size: 13px; color: #b9bfcd; line-height: 1.75; margin-top: 12px; }
