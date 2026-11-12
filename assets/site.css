@@ -1987,3 +1987,29 @@ body { isolation: isolate; }
   .header-inner .button-small { padding-inline: 9px; font-size: 10px; white-space: nowrap; }
   .header-inner .button-small svg { display: none; }
 }
+
+.launch-help-link { margin-top: 10px; font-size: 11px; color: #b7bdcb; }
+.launch-help-link a { text-decoration-color: #ffffff40; }
+.first-launch {
+  max-width: 710px;
+  margin: 8px auto 25px;
+  padding: 26px;
+  border: 1px solid #ffffff28;
+  border-radius: 20px;
+  background: #0b0d12b0;
+  text-align: left;
+  scroll-margin-top: 110px;
+}
+.first-launch h3 { margin: 12px 0; font-size: 23px; }
+.first-launch > p:not(.eyebrow) { font-size: 13px; line-height: 1.75; color: #b9bfcd; }
+.first-launch ol { padding-left: 22px; margin: 18px 0; font-size: 14px; color: #d0d5e0; }
+.first-launch li { padding-left: 5px; margin: 12px 0; }
+.first-launch strong { color: #f5f5f7; font-weight: 600; }
+.first-launch details { margin: 16px 0; border-top: 1px solid var(--line); }
+.first-launch .first-launch-caution { font-size: 11px !important; margin-bottom: 16px; }
+.first-launch .text-link { display: inline-block; }
+@media (max-width:480px) {
+  .first-launch { padding: 19px 17px; }
+  .first-launch h3 { font-size: 21px; }
+  .first-launch ol { font-size: 13px; }
+}
