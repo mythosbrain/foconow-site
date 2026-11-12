@@ -48,67 +48,113 @@ controls.addEventListener('keydown', event => {
   tabs[next].focus();
 });
 
-// Decorative motion stays optional and never runs against the system preference.
+// One motion preference controls the entire spatial experience.
 const root = document.documentElement;
-const motionButton = document.querySelector('.motion-toggle');
+const motionButtons = [...document.querySelectorAll('.motion-toggle')];
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+const surfaces = [...document.querySelectorAll('.depth-surface')];
 const previewStage = document.querySelector('.preview-stage');
 const appWindow = document.querySelector('.app-window');
+const targets = [appWindow, ...surfaces];
+const visibleSurfaces = new Set();
+const frames = new Map();
+let scrollFrame = 0;
 let motionPaused = false;
 try { motionPaused = localStorage.getItem('foconow-site-motion') === 'paused'; } catch {}
-let tiltFrame = 0;
 
-function resetTilt() {
-  cancelAnimationFrame(tiltFrame);
-  tiltFrame = 0;
-  for (const property of ['--tilt-x', '--tilt-y', '--glare-x', '--glare-y', '--glare']) {
-    appWindow.style.removeProperty(property);
-  }
+function resetTarget(target) {
+  cancelAnimationFrame(frames.get(target) || 0);
+  frames.delete(target);
+  for (const property of ['--tilt-x', '--tilt-y', '--glare-x', '--glare-y', '--glare']) target.style.removeProperty(property);
+}
+function resetAll() {
+  targets.forEach(resetTarget);
+  cancelAnimationFrame(scrollFrame);
+  scrollFrame = 0;
+  surfaces.forEach(surface => surface.style.removeProperty('--depth-scroll'));
+  root.style.removeProperty('--space-y');
 }
 function updateMotion() {
   const disabled = motionPaused || reducedMotion.matches;
   root.dataset.motion = disabled || document.hidden ? 'off' : 'on';
-  motionButton.disabled = reducedMotion.matches;
-  motionButton.setAttribute('aria-pressed', String(disabled));
-  motionButton.querySelector('.motion-label').textContent = reducedMotion.matches
-    ? 'Reduced motion' : motionPaused ? 'Play motion' : 'Pause motion';
-  motionButton.querySelector('.motion-symbol').textContent = disabled ? '▷' : 'Ⅱ';
-  if (root.dataset.motion === 'off') resetTilt();
+  for (const button of motionButtons) {
+    button.disabled = reducedMotion.matches;
+    button.setAttribute('aria-pressed', String(disabled));
+    button.querySelector('.motion-label').textContent = reducedMotion.matches
+      ? 'Reduced motion' : motionPaused ? 'Play motion' : 'Pause motion';
+    button.querySelector('.motion-symbol').textContent = disabled ? '▷' : 'Ⅱ';
+    button.title = button.querySelector('.motion-label').textContent;
+  }
+  if (root.dataset.motion === 'off') resetAll();
+  else updateDepth();
 }
-motionButton.hidden = false;
-motionButton.addEventListener('click', () => {
-  motionPaused = !motionPaused;
-  try { localStorage.setItem('foconow-site-motion', motionPaused ? 'paused' : 'playing'); } catch {}
-  updateMotion();
-});
-reducedMotion.addEventListener('change', updateMotion);
-finePointer.addEventListener('change', resetTilt);
-document.addEventListener('visibilitychange', updateMotion);
-window.addEventListener('blur', resetTilt);
-window.addEventListener('resize', resetTilt, { passive: true });
-previewStage.addEventListener('pointerleave', resetTilt);
-previewStage.addEventListener('pointercancel', resetTilt);
-previewStage.addEventListener('pointermove', event => {
-  if (root.dataset.motion !== 'on' || !finePointer.matches || event.pointerType === 'touch') return;
-  cancelAnimationFrame(tiltFrame);
-  const { clientX, clientY } = event;
-  tiltFrame = requestAnimationFrame(() => {
-    const bounds = previewStage.getBoundingClientRect();
-    const x = Math.max(0, Math.min(1, (clientX - bounds.left) / bounds.width));
-    const y = Math.max(0, Math.min(1, (clientY - bounds.top) / bounds.height));
-    appWindow.style.setProperty('--tilt-x', `${(0.5 - y) * 4}deg`);
-    appWindow.style.setProperty('--tilt-y', `${(x - 0.5) * 4}deg`);
-    appWindow.style.setProperty('--glare-x', `${x * 100}%`);
-    appWindow.style.setProperty('--glare-y', `${y * 100}%`);
-    appWindow.style.setProperty('--glare', '1');
-    tiltFrame = 0;
+for (const button of motionButtons) {
+  button.hidden = false;
+  button.addEventListener('click', () => {
+    motionPaused = !motionPaused;
+    try { localStorage.setItem('foconow-site-motion', motionPaused ? 'paused' : 'playing'); } catch {}
+    updateMotion();
   });
-});
+}
+reducedMotion.addEventListener('change', updateMotion);
+finePointer.addEventListener('change', resetAll);
+document.addEventListener('visibilitychange', updateMotion);
+window.addEventListener('blur', resetAll);
+window.addEventListener('resize', resetAll, { passive: true });
+
+function attachTilt(stage, target, strength) {
+  stage.addEventListener('pointerleave', () => resetTarget(target));
+  stage.addEventListener('pointercancel', () => resetTarget(target));
+  stage.addEventListener('focusin', () => resetTarget(target));
+  stage.addEventListener('pointermove', event => {
+    if (root.dataset.motion !== 'on' || !finePointer.matches || event.pointerType === 'touch') return;
+    cancelAnimationFrame(frames.get(target) || 0);
+    const { clientX, clientY } = event;
+    frames.set(target, requestAnimationFrame(() => {
+      const bounds = stage.getBoundingClientRect();
+      const x = Math.max(0, Math.min(1, (clientX - bounds.left) / bounds.width));
+      const y = Math.max(0, Math.min(1, (clientY - bounds.top) / bounds.height));
+      target.style.setProperty('--tilt-x', `${(0.5 - y) * strength}deg`);
+      target.style.setProperty('--tilt-y', `${(x - 0.5) * strength}deg`);
+      target.style.setProperty('--glare-x', `${x * 100}%`);
+      target.style.setProperty('--glare-y', `${y * 100}%`);
+      target.style.setProperty('--glare', '1');
+      frames.delete(target);
+    }));
+  });
+}
+attachTilt(previewStage, appWindow, 4);
+surfaces.forEach(surface => attachTilt(surface, surface, surface.matches('.feature-card') ? 8 : 4));
+
+function updateDepth() {
+  if (scrollFrame || root.dataset.motion !== 'on' || !finePointer.matches) return;
+  scrollFrame = requestAnimationFrame(() => {
+    // Read all geometry first, then write: no continuous rendering loop.
+    const positions = [...visibleSurfaces].map(surface => {
+      const bounds = surface.getBoundingClientRect();
+      const distance = (bounds.top + bounds.height / 2 - innerHeight / 2) / innerHeight;
+      return [surface, Math.max(-7, Math.min(7, distance * 10))];
+    });
+    for (const [surface, offset] of positions) surface.style.setProperty('--depth-scroll', `${offset}px`);
+    root.style.setProperty('--space-y', `${-Math.min(scrollY, 6000) * 0.015}px`);
+    scrollFrame = 0;
+  });
+}
+window.addEventListener('scroll', updateDepth, { passive: true });
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {
-    root.dataset.heroVisible = String(entries[0].isIntersecting);
-  });
+    for (const entry of entries) {
+      if (entry.target.matches('.hero-art')) root.dataset.heroVisible = String(entry.isIntersecting);
+      else {
+        entry.target.dataset.visible = String(entry.isIntersecting);
+        if (entry.isIntersecting) visibleSurfaces.add(entry.target);
+        else { visibleSurfaces.delete(entry.target); resetTarget(entry.target); }
+      }
+    }
+    updateDepth();
+  }, { rootMargin: '40px' });
   observer.observe(document.querySelector('.hero-art'));
+  surfaces.forEach(surface => observer.observe(surface));
 }
 updateMotion();
